@@ -12,18 +12,20 @@ fetch(url)
     appendPosts(posts);
   });
 
+// append wp posts to the DOM
 function appendPosts(posts) {
   let htmlTemplate = "";
   for (let post of posts) {
+    console.log(post);
     htmlTemplate += `
       <article>
-        <img src="${getFeaturedImageUrl(post)}">
-        <h2>${post.title.rendered}</h2>
-        ${post.content.rendered}
+      <img src="${getFeaturedImageUrl(post)}">
+        <h3>${post.title.rendered}</h3>
+        <p>${post.content.rendered}</p>
       </article>
     `;
   }
-  document.querySelector("#content").innerHTML = htmlTemplate;
+  document.querySelector('#content').innerHTML = htmlTemplate;
 }
 
 // get the featured image url
