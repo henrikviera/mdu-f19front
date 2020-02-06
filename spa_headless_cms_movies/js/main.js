@@ -17,7 +17,7 @@ let movies = [];
 
 // fetch all movies from WP
 function getMovies() {
-  fetch('http://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed')
+  fetch('https://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed')
     .then(function(response) {
       return response.json();
     })
@@ -67,7 +67,7 @@ function search(value) {
 
 // fetch all genres / categories from WP
 function getGenres() {
-  fetch('http://movie-api.cederdorff.com/wp-json/wp/v2/categories')
+  fetch('https://movie-api.cederdorff.com/wp-json/wp/v2/categories')
     .then(function(response) {
       return response.json();
     })
@@ -96,7 +96,7 @@ function genreSelected(genreId) {
   console.log(`Genre ID: ${genreId}`);
   if (genreId) {
     showLoader(true);
-    fetch(`http://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed&categories=${genreId}`)
+    fetch(`https://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed&categories=${genreId}`)
       .then(function(response) {
         return response.json();
       })
