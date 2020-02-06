@@ -1,19 +1,12 @@
-import Spa from "./spa.js";
-import MovieService from "./movie-service.js";
+//functions in global variables
+window.pageChange = function () {
 
-let spa = new Spa("movies");
-let movieService = new MovieService();
-
-movieService.init();
-
-window.pageChange = function() {
-  spa.pageChange();
 }
 
-window.categorySelected = function(id) {
-  movieService.getMoviesByCategory(id);
+window.categorySelected = function (id) {
+
 }
 
-window.search = function(searchValue) {
-  movieService.search(searchValue);
+window.search = function (searchValue) {
+
 }
