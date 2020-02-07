@@ -8,20 +8,31 @@ class MovieService {
     this.loader = new Loader();
   }
 
+  init() {
+    this.getMovies();
+    this.getCategories();
+    this.loader.show(false);
+  }
+
   async getMovies() {
     let data = await fetch('https://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed').then(res => res.json());
     console.log(data);
     this.movies = data;
     this.appendMovies(this.movies);
+  }
+
+  async getCategories() {
+    let data = await fetch('https://movie-api.cederdorff.com/wp-json/wp/v2/categories').then(res => res.json());
+    console.log(data);
+    this.categories = data;
+    this.appendCategories();
+  }
+
+  async getMoviesByCategory(categoryId) {
+    this.loader.show(true);
+    let data = await fetch(`https://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed&categories=${categoryId}`).then(res => res.json());
+    this.appendMoviesByCategory(data);
     this.loader.show(false);
-  }
-
-  getCategories() {
-
-  }
-
-  getMoviesByCategory(categoryId) {
-
   }
 
   appendMovies(movies) {
