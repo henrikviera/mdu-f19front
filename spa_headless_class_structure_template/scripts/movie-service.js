@@ -6,7 +6,7 @@ class MovieService {
   }
 
   getMovies() {
-
+    // let data = await fetch('https://movie-api.cederdorff.com/wp-json/wp/v2/posts?_embed').then(res => res.json());
   }
 
   getCategories() {
