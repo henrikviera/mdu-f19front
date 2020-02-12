@@ -2,13 +2,13 @@
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCMyBxTqrwDePj6kSVgD5rVsEQ-66FCoCk",
-  authDomain: "mdu-e18front.firebaseapp.com",
-  databaseURL: "https://mdu-e18front.firebaseio.com",
-  projectId: "mdu-e18front",
-  storageBucket: "mdu-e18front.appspot.com",
-  messagingSenderId: "1065294705229",
-  appId: "1:1065294705229:web:81f00c89d44d800c75e204"
+  apiKey: "AIzaSyBAnIrbdeQLbwO3MY7lyD_75HfKJH12-pA",
+  authDomain: "user-crud-a48d3.firebaseapp.com",
+  databaseURL: "https://user-crud-a48d3.firebaseio.com",
+  projectId: "user-crud-a48d3",
+  storageBucket: "user-crud-a48d3.appspot.com",
+  messagingSenderId: "78474489693",
+  appId: "1:78474489693:web:af9d0ca257a501437282b4"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
