@@ -14,7 +14,7 @@ window.createUser = () => {
   // references to the input fields
   let nameInput = document.querySelector('#name');
   let mailInput = document.querySelector('#mail');
-  let imageInput = document.querySelector('#imagePreviewUpdate');
+  let imageInput = document.querySelector('#imagePreview');
   _userService.create(nameInput.value, mailInput.value, imageInput.src);
   _spaService.navigateTo("home");
 }
