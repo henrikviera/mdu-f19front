@@ -14,6 +14,7 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+let _firebaseUI;
 
 // ========== FIREBASE AUTH ========== //
 // Listen on authentication state change
@@ -39,13 +40,16 @@ function userNotAuthenticated() {
   const uiConfig = {
     credentialHelper: firebaseui.auth.CredentialHelper.NONE,
     signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
     ],
     signInSuccessUrl: '#home'
   };
   // Init Firebase UI Authentication
-  const ui = new firebaseui.auth.AuthUI(firebase.auth());
-  ui.start('#firebaseui-auth-container', uiConfig);
+  if (!_firebaseUI) {
+    _firebaseUI = new firebaseui.auth.AuthUI(firebase.auth());
+  }
+  _firebaseUI.start('#firebaseui-auth-container', uiConfig);
   showLoader(false);
 }
 
