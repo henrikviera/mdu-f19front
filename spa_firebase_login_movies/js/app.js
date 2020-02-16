@@ -8,7 +8,7 @@ let _movies;
 
 // ========== FIREBASE AUTH ========== //
 // Listen on authentication state change
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) { // if user exists and is authenticated
     userAuthenticated(user);
   } else { // if user is not logged in
@@ -96,7 +96,7 @@ function updateUser() {
 function previewImage(file, previewId) {
   if (file) {
     let reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
       document.querySelector('#' + previewId).setAttribute('src', event.target.result);
     };
     reader.readAsDataURL(file);
@@ -110,7 +110,7 @@ function init() {
   // init user data and favourite movies
   _userRef.doc(_currentUser.uid).onSnapshot({
     includeMetadataChanges: true
-  }, function(userData) {
+  }, function (userData) {
     if (!userData.metadata.hasPendingWrites && userData.data()) {
       _currentUser = {
         ...firebase.auth().currentUser,
@@ -126,9 +126,9 @@ function init() {
   });
 
   // init all movies
-  _movieRef.onSnapshot(function(snapshotData) {
+  _movieRef.onSnapshot(function (snapshotData) {
     _movies = [];
-    snapshotData.forEach(function(doc) {
+    snapshotData.forEach(function (doc) {
       let movie = doc.data();
       movie.id = doc.id;
       _movies.push(movie);
@@ -170,7 +170,7 @@ async function appendFavMovies(favMovieIds = []) {
     htmlTemplate = "<p>Please, add movies to favourites.</p>";
   } else {
     for (let movieId of favMovieIds) {
-      await _movieRef.doc(movieId).get().then(function(doc) {
+      await _movieRef.doc(movieId).get().then(function (doc) {
         let movie = doc.data();
         movie.id = doc.id;
         htmlTemplate += `
