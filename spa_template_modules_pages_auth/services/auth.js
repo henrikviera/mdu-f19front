@@ -1,13 +1,14 @@
 import spaService from "./spa.js";
 import loaderService from "./loader.js";
+import movieService from "./movie.js";
 
 class AuthService {
     constructor() {
-        this.currentUser;
         this.ui = new firebaseui.auth.AuthUI(firebase.auth());
         this.userRef = _db.collection("users");
         this.spaService = spaService;
         this.loaderService = loaderService;
+        this.authUser;
     }
 
     init() {
@@ -22,14 +23,13 @@ class AuthService {
     }
 
     userAuthenticated(user) {
-        this.currentUser = user;
         this.appendAuthUser();
         this.spaService.hideTabbar(false);
+        movieService.init();
         this.loaderService.show(false);
     }
 
     userNotAuthenticated() {
-        this.currentUser = null; // reset _currentUser
         this.spaService.hideTabbar(true);
         this.spaService.navigateTo("login");
 
@@ -50,11 +50,14 @@ class AuthService {
 
     async getAuthUser() {
         let authUser = firebase.auth().currentUser;
+
+
         let dbUser = await this.userRef.doc(authUser.uid).get().then(doc => doc.data());
         let user = {
             ...authUser,
             ...dbUser
         };
+        this.authUser = user;
         return user;
     }
 
@@ -90,6 +93,14 @@ class AuthService {
             this.loaderService.show(false);
         });
 
+    }
+    authUserHasFav(favMovieId) {
+        if (this.authUser.favMovies && this.authUser.favMovies.includes(favMovieId)) {
+            return true;
+        } else {
+
+            return false;
+        }
     }
 }
 

@@ -2,7 +2,9 @@
 import LoginPage from "./pages/login.js";
 import HomePage from "./pages/home.js";
 import PersonsPage from "./pages/persons.js";
+import MoviePage from "./pages/movies.js";
 import ProfilePage from "./pages/profile.js";
+
 // import your services
 import spaService from "./services/spa.js";
 import authService from "./services/auth.js";
@@ -11,6 +13,7 @@ import authService from "./services/auth.js";
 let loginPage = new LoginPage();
 let homePage = new HomePage();
 let personsPage = new PersonsPage();
+let moviePage = new MoviePage();
 let profilePage = new ProfilePage();
 
 // init services 
