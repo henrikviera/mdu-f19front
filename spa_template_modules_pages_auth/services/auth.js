@@ -9,6 +9,7 @@ class AuthService {
         this.spaService = spaService;
         this.loaderService = loaderService;
         this.authUser;
+        this.authUserRef;
     }
 
     init() {
@@ -23,9 +24,8 @@ class AuthService {
     }
 
     userAuthenticated(user) {
-        this.appendAuthUser();
         this.spaService.hideTabbar(false);
-        movieService.init();
+        this.initAuthUserRef();
         this.loaderService.show(false);
     }
 
@@ -42,33 +42,41 @@ class AuthService {
             signInSuccessUrl: '#home'
         };
         this.ui.start('#firebaseui-auth-container', uiConfig);
+        this.loaderService.show(false);
+    }
+
+    initAuthUserRef() {
+        let authUser = firebase.auth().currentUser;
+        this.authUserRef = _db.collection("users").doc(authUser.uid);
+        // init user data and favourite movies
+        this.authUserRef.onSnapshot({
+            includeMetadataChanges: true
+        }, userData => {
+            if (!userData.metadata.hasPendingWrites && userData.data()) {
+                let user = {
+                    ...authUser,
+                    ...userData.data()
+                }; //concating two objects: authUser object and userData objec from the db
+                this.authUser = user;
+                this.appendAuthUser();
+                movieService.init();
+                loaderService.show(false);
+            }
+
+        });
     }
 
     logout() {
         firebase.auth().signOut();
     }
 
-    async getAuthUser() {
-        let authUser = firebase.auth().currentUser;
-
-
-        let dbUser = await this.userRef.doc(authUser.uid).get().then(doc => doc.data());
-        let user = {
-            ...authUser,
-            ...dbUser
-        };
-        this.authUser = user;
-        return user;
-    }
-
-    async appendAuthUser() {
-        let user = await this.getAuthUser();
-        document.querySelector('#name').value = user.displayName || "";
-        document.querySelector('#mail').value = user.email;
-        document.querySelector('#birthdate').value = user.birthdate || "";
-        document.querySelector('#hairColor').value = user.hairColor || "";
-        document.querySelector('#imagePreview').src = user.img || "";
-        document.querySelector('#phone').value = user.phone || "";
+    appendAuthUser() {
+        document.querySelector('#name').value = this.authUser.displayName || "";
+        document.querySelector('#mail').value = this.authUser.email;
+        document.querySelector('#birthdate').value = this.authUser.birthdate || "";
+        document.querySelector('#hairColor').value = this.authUser.hairColor || "";
+        document.querySelector('#imagePreview').src = this.authUser.img || "";
+        document.querySelector('#phone').value = this.authUser.phone || "";
     }
 
     updateAuthUser(name, img, birthdate, hairColor, phone) {
@@ -82,7 +90,7 @@ class AuthService {
         });
 
         // update database user
-        this.userRef.doc(user.uid).set({
+        this.authUserRef.set({
             img: img,
             birthdate: birthdate,
             hairColor: hairColor,
@@ -93,14 +101,6 @@ class AuthService {
             this.loaderService.show(false);
         });
 
-    }
-    authUserHasFav(favMovieId) {
-        if (this.authUser.favMovies && this.authUser.favMovies.includes(favMovieId)) {
-            return true;
-        } else {
-
-            return false;
-        }
     }
 }
 

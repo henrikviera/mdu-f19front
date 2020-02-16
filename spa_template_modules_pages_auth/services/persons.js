@@ -1,13 +1,9 @@
-import loaderService from "./loader.js";
 class PersonsService {
-  constructor() {
-    this.loaderService = loaderService;
-  }
+  constructor() {}
 
   async loadPersons() {
     let response = await fetch("https://randomuser.me/api/?results=9");
     let jsonData = await response.json();
-    this.loaderService.show(false);
     return jsonData.results;
   }
 }
