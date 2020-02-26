@@ -1,10 +1,7 @@
-import movieService from "../services/movie.js";
-
 export default class FavoritesPage {
   constructor() {
     this.template();
   }
-
 
   template() {
     document.getElementById('content').innerHTML += /*html*/ `

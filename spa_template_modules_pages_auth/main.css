@@ -282,6 +282,10 @@ input {
   letter-spacing: 2px;
 }
 
+.firebaseui-button {
+  max-width: 35%;
+}
+
 .mdl-button--raised.mdl-button--colored,
 .mdl-button--raised.mdl-button--colored:active,
 .mdl-button--raised.mdl-button--colored:hover {
@@ -292,4 +296,8 @@ input {
 
 .firebaseui-textfield.mdl-textfield .firebaseui-label::after {
   background-color: var(--green);
+}
+
+.mdl-button--primary.mdl-button--primary {
+  color: var(--green);
 }

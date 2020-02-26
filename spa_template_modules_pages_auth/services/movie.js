@@ -73,12 +73,14 @@ class MovieService {
 
     async getFavMovies() {
         let favMovies = [];
-        for (let movieId of authService.authUser.favMovies) {
-            await this.movieRef.doc(movieId).get().then(function (doc) {
-                let movie = doc.data();
-                movie.id = doc.id;;
-                favMovies.push(movie);
-            });
+        if (authService.authUser.favMovies) {
+            for (let movieId of authService.authUser.favMovies) {
+                await this.movieRef.doc(movieId).get().then(function (doc) {
+                    let movie = doc.data();
+                    movie.id = doc.id;;
+                    favMovies.push(movie);
+                });
+            }
         }
         return favMovies;
     }
