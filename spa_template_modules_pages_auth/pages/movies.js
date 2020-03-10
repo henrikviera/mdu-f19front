@@ -6,7 +6,7 @@ export default class MoviePage {
   }
 
   template() {
-    document.getElementById('content').innerHTML += `
+    document.getElementById('content').innerHTML += /*html*/ `
       <section id="movies" class="page">
         <header class="topbar">
           <h2>Movies</h2>
