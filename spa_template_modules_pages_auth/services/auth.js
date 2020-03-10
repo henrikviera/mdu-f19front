@@ -6,8 +6,6 @@ class AuthService {
     constructor() {
         this.ui = new firebaseui.auth.AuthUI(firebase.auth());
         this.userRef = _db.collection("users");
-        this.spaService = spaService;
-        this.loaderService = loaderService;
         this.authUser;
         this.authUserRef;
     }
@@ -24,14 +22,14 @@ class AuthService {
     }
 
     userAuthenticated(user) {
-        this.spaService.hideTabbar(false);
+        spaService.hideTabbar(false);
         this.initAuthUserRef();
-        this.loaderService.show(false);
+        loaderService.show(false);
     }
 
     userNotAuthenticated() {
-        this.spaService.hideTabbar(true);
-        this.spaService.navigateTo("login");
+        spaService.hideTabbar(true);
+        spaService.navigateTo("login");
 
         // Firebase UI configuration
         const uiConfig = {
@@ -42,17 +40,18 @@ class AuthService {
             signInSuccessUrl: '#home'
         };
         this.ui.start('#firebaseui-auth-container', uiConfig);
-        this.loaderService.show(false);
+        loaderService.show(false);
     }
 
     initAuthUserRef() {
         let authUser = firebase.auth().currentUser;
         this.authUserRef = _db.collection("users").doc(authUser.uid);
+
         // init user data and favourite movies
         this.authUserRef.onSnapshot({
             includeMetadataChanges: true
         }, userData => {
-            if (!userData.metadata.hasPendingWrites && userData.data()) {
+            if (!userData.metadata.hasPendingWrites) {
                 let user = {
                     ...authUser,
                     ...userData.data()
@@ -62,7 +61,6 @@ class AuthService {
                 movieService.init();
                 loaderService.show(false);
             }
-
         });
     }
 
@@ -80,7 +78,7 @@ class AuthService {
     }
 
     updateAuthUser(name, img, birthdate, hairColor, phone) {
-        this.loaderService.show(true);
+        loaderService.show(true);
 
         let user = firebase.auth().currentUser;
 
@@ -98,7 +96,7 @@ class AuthService {
         }, {
             merge: true
         }).then(() => {
-            this.loaderService.show(false);
+            loaderService.show(false);
         });
 
     }

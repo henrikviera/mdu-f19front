@@ -2,8 +2,7 @@ import personService from "../services/persons.js";
 export default class PersonsPage {
   constructor() {
     this.template();
-    this.personsService = personService
-    this.personsService.loadPersons().then(persons => this.appendPersons(persons));
+    this.appendPersons();
   }
 
   template() {
@@ -17,7 +16,9 @@ export default class PersonsPage {
     `;
   }
 
-  appendPersons(persons) {
+  async appendPersons() {
+    let persons = await personService.loadPersons();
+
     for (let person of persons) {
       document.querySelector("#grid-persons").innerHTML += /*html*/ `
         <article>
