@@ -49,11 +49,11 @@ class SpaService {
     this.showPage(page);
   }
 
-  // show and hide tabbar
+hide  // show and hide tabbar
   hideTabbar(hide) {
     let tabbar = document.querySelector('#tabbar');
     if (hide) {
-      tabbar.classList.add("hide");
+      tabbar.classList.add("");
     } else {
       tabbar.classList.remove("hide");
     }

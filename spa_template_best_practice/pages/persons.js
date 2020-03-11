@@ -5,8 +5,10 @@ export default class PersonsPage {
     this.initData();
   }
 
-  initData() {
-
+  async initData() {
+    let person = await _personService.loadPersons();
+    console.log(person)
+    this.appendPersons(person);
   }
 
   template() {
@@ -14,7 +16,7 @@ export default class PersonsPage {
       <section id="persons" class="page">
         <header class="topbar">
           <h2>Persons</h2>
-        </header>
+        </header>  
         <div id="grid-persons" class="grid-container"></div>
       </section>
     `;
